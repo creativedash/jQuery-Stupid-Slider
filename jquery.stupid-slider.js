@@ -140,6 +140,8 @@
                 controls.eq(activeSlide.attr("data-index")).addClass("active").siblings().removeClass("active");
             }
 
+            restartTimer();
+
             // Make Sure We Remeber Where We Are
             currentIndex = index; 
         }
@@ -172,6 +174,7 @@
         function next() {
             if ((currentIndex + 1) < slides.length) {
                 goToSlide(currentIndex + 1);
+                restartTimer();
             }else if ((currentIndex + 1) === slides.length && options.loop) {
 
                 // Disable Transitions
@@ -280,6 +283,10 @@
         }
 
 
+        /**
+         * Stop the timer
+         * @return {undefined}
+         */
         function stopTimer() {
 
             // Can't remove timers that don't exist
@@ -291,6 +298,21 @@
             timer = clearInterval(timer);
         }
 
+
+        /**
+         * Restart the timer
+         * @return {undefined}
+         */
+        function restartTimer() {
+
+            // Make sure we've got a timer to reset
+            if (!options.interval) {
+                return;
+            }
+
+            stopTimer();
+            startTimer();
+        }
 
 
         // Initialize Slider
